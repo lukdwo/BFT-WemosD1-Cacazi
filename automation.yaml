@@ -12,7 +12,7 @@ action:
       filename: /media/DZWONEK/brama.jpg
     target:
       device_id: your_device_id
-  - alias: Set up variables for the actions
+  - alias: Ustawienia zmiennych
     variables:
       action_furtka: Furtka
       action_brama: Brama
