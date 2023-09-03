@@ -1,0 +1,22 @@
+type: entities
+entities:
+  - entity: sensor.brama_czujnik
+    type: custom:multiple-entity-row
+    name: Brama
+    secondary_info: last-changed
+    icon: mdi:gate
+    entities:
+      - entity: switch.tasmota_2
+        name: Furtka
+        tap_action:
+          action: toggle
+      - entity: switch.tasmota_switch_relay_1
+        name: Brama
+        tap_action:
+          action: toggle
+      - entity: sensor.brama_analog_range
+        name: Gaz
+      - entity: sensor.brama_bmp280_pressure
+        name: Ciśnienie
+      - entity: sensor.brama_bmp280_temperature
+        name: Temp

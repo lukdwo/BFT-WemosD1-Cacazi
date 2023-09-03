@@ -1,0 +1,71 @@
+alias: Dzwonek_brama
+description: ""
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.brama_dzwonek
+    from: unavailable
+condition: []
+action:
+  - service: camera.snapshot
+    data:
+      filename: /media/DZWONEK/brama.jpg
+    target:
+      device_id: your_device_id
+  - alias: Set up variables for the actions
+    variables:
+      action_furtka: Furtka
+      action_brama: Brama
+  - service: notify.mobile_app_telefon
+    data:
+      message: Dzwonek do bramy
+      data:
+        ttl: 0
+        priority: high
+        image: /media/local/DZWONEK/brama.jpg
+        clickAction: lovelace/default_view
+        vibrationPattern: 100, 1000, 100, 1000, 100
+        channel: Motion
+        renotify: 1
+        actions:
+          - action: "{{ action_furtka }}"
+            title: Furtka
+          - action: "{{ action_brama }}"
+            title: Brama
+  - alias: Wait for a response
+    wait_for_trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "{{ action_furtka }}"
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: "{{ action_brama }}"
+    timeout:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - alias: Perform the action
+    choose:
+      - conditions: "{{ wait.trigger.event.data.action == action_furtka }}"
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.tasmota_2
+            data: {}
+      - conditions: "{{ wait.trigger.event.data.action == action_brama }}"
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.tasmota_switch_relay_1
+            data: {}
+  - service: camera.snapshot
+    data:
+      filename: >-
+        /media/DZWONEK/{{ now().strftime("%Y%m%d") }}/DZWONEK_BRAMA_{{
+        now().strftime("%Y%m%d-%H%M%S") }}.jpg
+    target:
+      device_id: your_device_id
+mode: single
