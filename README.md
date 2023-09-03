@@ -5,7 +5,6 @@ W związku z tym, że sterownik zamontowałem w kotłowni to rozszerzyłem jego 
 Całość zintegrowałem z HomeAssistant dodając automatyzację z powiadomieniami na telefon z możliwością otwarcia furtki bądź bramy bezpośrednio z powiadomienia. W powiadomieniu otzymuję zrzut z kamery zamontowanej na wejście.
 Dodatkowo zastosowany wodoodporny przycisk monostabilny uruchamia bezprzewodowy dzwonek Cacazia. Pilot dzwonka oparty o płytę sfx002k.
 Tzykrotne wciśnięcie dzwonka (dodatkowego przycisku) otwiera furtkę, a czterokrotne bramę.
-Oczywiście projekt można uprościć i zastosować wyłącznie douł przekaźnikowy do otwierania bramy lub furtki.
 
 # Wymagane podzespoły
 Podzespoły:
@@ -60,8 +59,8 @@ Rule3 ON Button2#state=15 DO publish stat/czujnik/brama Open ENDON
 # Relay 2 0,5s
 PulseTime2 5
 ```
-Konfiguracja GPIO:
-![My Image](Tasmota.jpg)\
+Ustawienia GPIO:
+![My Image](Tasmota.jpg) \
 
 # Konfiguracja Homeassistant
 `vi  ./HA/config/configuration.yaml`
